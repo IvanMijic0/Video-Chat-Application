@@ -1,1 +1,1 @@
-# Video-Chat-Appllication
+# Video-Chat-Application
