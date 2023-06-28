@@ -1,4 +1,12 @@
 <?php
+
+global $userObj;
+include "core/init.php";
+
+if ($userObj->isLoggedIn()) {
+    $userObj->redirect("home.php");
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST)) {
         $email = trim(stripcslashes(htmlentities($_POST["email"])));
@@ -9,7 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = "invalid Email format";
             } else {
-
+                if (!empty($userObj)) {
+                    if ($user = $userObj->emailExist($email)) {
+                        if (password_verify($password, $user->password)) {
+                            // User logged in
+                            session_regenerate_id($delete_old_session = false);
+                            // Login the user
+                            $_SESSION["userId"] = $user->userId;
+                            // Redirect user
+                            $userObj->redirect("home.php");
+                        } else {
+                            $error = "Incorrect email or password";
+                        }
+                    }
+                }
             }
         } else {
             // Display error
@@ -17,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
 ?>
 
 <html lang="">
@@ -43,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!--LEFT_SIDE-->
         <div class="w-2/5 border-r">
             <div class="select-none flex h-full items-center justify-center">
-                <img class="select-none w-4/5" src="assets/images/login-left-bg.png">
+                <img class="select-none w-4/5" src="assets/images/login-left-bg.png" alt="">
             </div>
         </div><!--LEFT_SIDE_END-->
 
@@ -54,22 +74,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="flex flex-col flex-1 h-full overflow-hidden overflow-y-auto items-center justify-start">
 
                     <div class="mt-10 w-60 h-60 right-img rounded-full overflow-hidden">
-                        <img class="h-auto w-full" src="assets/images/user.png">
+                        <img class="h-auto w-full" src="assets/images/user.png" alt="User image">
                     </div>
 
                     <div class="right-heading w-full flex flex-col items-center">
                         <div>
-                            <h2 class="text-center" style="padding-top:0px;">Wellcome!</h2>
+                            <h2 class="text-center" style="padding-top:0;">Wellcome!</h2>
                             <p>Sign-in into your account.</p>
                         </div>
                         <form method="post" class="w-full">
                             <div class="w-full flex flex-col items-center">
                                 <div class="flex w-2/4 flex-col my-2 items-center">
-                                    <input class="w-4/5 my-2 border border-gray-200 rounded px-4 py-2" type="email"
-                                           name="email" placeholder="Email">
-
-                                    <input class="w-4/5 my-2 border border-gray-200 rounded px-4 py-2" type="password"
-                                           name="password" placeholder="Password">
+                                        <input class="w-4/5 my-2 border border-gray-200 rounded px-4 py-2" type="email"
+                                               name="email" placeholder="Email">
+                                        <input class="w-4/5 my-2 border border-gray-200 rounded px-4 py-2" type="password"
+                                               name="password" placeholder="Password">
                                     <div class="select-none  error text-red-500 text-xs p-2 px-2 w-auto self-start ml-20">
                                         <!-- ERROR -->
                                         <?php

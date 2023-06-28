@@ -3,25 +3,37 @@
 namespace MyApp;
 
 use Exception;
+use http\Client;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use SplObjectStorage;
 
 class Chat implements MessageComponentInterface
 {
-    protected $clients;
+    protected SplObjectStorage $clients;
+    public User $userObj;
+    public $data;
 
     public function __construct()
     {
         $this->clients = new SplObjectStorage();
+        $this->userObj = new User;
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
         // Store the new connection to send messages to later
-        $this->clients->attach($conn);
+        $queryString = $conn->httpRequest->getUri()->getQuery();
+        parse_str($queryString, $query);
 
-        echo "New connection! ($conn->resourceId)\n";
+        if ($data = $this->userObj->getUserBySession($query["token"])) {
+            $this->data = $data;
+            $conn->data = $data;
+            $this->clients->attach($conn);
+            $this->userObj->updateConnection($conn->resourceId, $data->userId);
+
+            echo "New connection! ($data->username)\n";
+        }
     }
 
     public function onClose(ConnectionInterface $conn)
@@ -29,7 +41,7 @@ class Chat implements MessageComponentInterface
         // The connection is closed, remove it, as we can no longer send it messages
         $this->clients->detach($conn);
 
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        echo "Connection $conn->resourceId has disconnected\n";
     }
 
     public function onError(ConnectionInterface $conn, Exception $e)
@@ -51,10 +63,22 @@ class Chat implements MessageComponentInterface
             $numRecV === 1 ? '' : 's'
         );
 
+        $data   = json_decode($msg, true);
+        $sendTo = $this->userObj->userData($data["sendTo"]);
+
+        $send["sendTo"]        = $sendTo->userId;
+        $send["by"]            = $from->data->userId;
+        $send["profileImage"]  = $from->data->profileImage;
+        $send["username"]      = $from->data->username;
+        $send["type"]          = $data["type"];
+        $send["data"]          = $data["data"];
+
         foreach ($this->clients as $client) {
             if ($from !== $client) {
                 // The sender is not the receiver, send to each client connected
-                $client->send($msg);
+                if ($client->resourceId == $sendTo->connectionId || $from == $client) {
+                    $client->send(json_encode($send));
+                }
             }
         }
     }

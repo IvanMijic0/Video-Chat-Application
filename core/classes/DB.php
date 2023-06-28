@@ -1,8 +1,14 @@
 <?php
 
+namespace MyApp;
+use Config;
+use PDO;
+
+require "config.php";
+
 class DB
 {
-    function connect()
+    function connect(): PDO
     {
         $host = Config::$host;
         $database = Config::$database;
