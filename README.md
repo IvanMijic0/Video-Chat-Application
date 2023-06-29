@@ -6,8 +6,8 @@ Huge thanks to lecturer Aizaz dinho, as most of this code was taken from his Ude
 
 ## Preview Screnshots
 
-![Call_1](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_1)
-![Call_2](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_2)
-![Call_3](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_3)
-![Call_4](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_4)
+![Call_1](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_1.jpg)
+![Call_2](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_2.jpg)
+![Call_3](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_3.jpg)
+![Call_4](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_4.jpg)
 
