@@ -25,3 +25,5 @@ To run the video chat application, ensure you have the following prerequisites i
 
 Huge thanks to lecturer Aizaz dinho, as most of this code was inspired by his Udemy lecture "Create a Live Video Chat Application Using WebRTC, PHP, JS".
 
+You can find his course here: https://www.udemy.com/course/create-a-live-video-chat-application-using-webrtc-php-js
+
