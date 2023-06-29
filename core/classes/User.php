@@ -57,7 +57,7 @@ class User
         header("Location: " . BASE_URL . $location);
     }
 
-    public function userData($userData = "")
+    public function userData($userId = "")
     {
         $userId = (!empty($userId) ? $userId : $this->userId);
 
@@ -98,7 +98,7 @@ class User
 	              <a href="' . BASE_URL . $user->username . '">
 		          <div class="user-box flex items-center flex-wrap">
 		          <div class="flex-shrink-0 user-img w-14 h-14 rounded-full border overflow-hidden">
-		             <img class="w-full h-full" src="' . BASE_URL . $user->profileImage . '">
+		             <img class="w-full h-full" src="' . BASE_URL . $user->profileImage . '" alt="">
 		            </div>
 		      <div class="user-name ml-2">
 		          <div><span class="flex font-medium">' . $user->name . '</span></div>

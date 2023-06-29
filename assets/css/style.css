@@ -6,7 +6,7 @@
 .wrapper{
 	position: relative;
 	z-index: 2;
-	background: #009688;
+	background: #138f98;
 }
 .wrapper::after{
 	content: "";
@@ -23,8 +23,8 @@
 
 .right-img{
 
-		
-		
+
+
 
 }
 .right-heading h2{
@@ -90,7 +90,7 @@
 	width: 100%;
 }
 .login-wrap > divdiv:last-child{
-	margin: 0px 20px 0px 20px;
+	margin: 0 20px 0px 20px;
 }
 .login-box{
 	background: rgba(179, 179, 179, 0.31);

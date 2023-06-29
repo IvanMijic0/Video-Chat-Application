@@ -5,6 +5,7 @@ if (!$userObj->isLoggedIn()) {
     $userObj->redirect("index.php");
 }
 $user = $userObj->userData();
+$userObj->updateSession();
 
 ?>
 <!DOCTYPE html>
@@ -27,10 +28,63 @@ $user = $userObj->userData();
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const conn = new WebSocket("ws://localhost:8080/?token=<?php echo $userObj->sessionId ?>");
+    </script>
 </head>
 <body>
 <!-- AlertPopup -->
+
+<div id="alertBox" class="hidden z-10 transition absolute w-full h-full flex items-center justify-center">
+    <div class="pop-up flex justify-between w-96 bg-white rounded overflow-hidden">
+        <div class="pl-6 border-green-600 px-2 py-2 flex items-center">
+            <div class="w-16 h-16 mx-1 rounded-full border overflow-hidden">
+                <img id="alertImage" class="w-full h-auto" src="" alt="">
+            </div>
+            <div class="flex flex-col">
+                <div id="alertName" class="mx-2 font-500">
+                </div>
+                <div class="animate-pulse mx-2 text-xs font-200 relative flex">
+                    <span id="alertMessage" class="flex"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- CallPopup -->
+
+<div id="callBox" class="hidden z-10 transition absolute w-full h-full flex items-center justify-center">
+    <div class="pop-up flex justify-between w-96 bg-white rounded overflow-hidden">
+        <div class="pl-6 border-green-600 px-2 py-2 flex items-center">
+            <div class="w-16 h-16 mx-1 rounded-full border overflow-hidden">
+                <img id="profileImage" class="w-full h-auto" src="">
+            </div>
+            <div class="flex flex-col">
+
+                <div id="username" class="mx-2 font-500">
+                    username
+                </div>
+                <div class="animate-pulse mx-2 text-xs font-200 relative flex">
+                    <span class="flex">Video calling</span>
+                    <span class="ml-2 text-lg text-green-600 top-0 flex">
+                        <i class=" fas fa-video"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center mx-4">
+            <ul class="flex pr-2">
+                <li>
+                    <button id="declineBtn" class="hover:text-red-700 transition text-red-600 px-4 py-1 text-xl "><i class="fas fa-times"></i></button>
+                </li>
+                <li>
+                    <button id="answerBtn" class="hover:text-green-700 transition text-green-600 px-4 py-1 text-xl "><i class="fas fa-phone"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <!--WRAPPER-->
 <div class="wrapper h-screen items-center justify-center flex">
@@ -93,6 +147,7 @@ $user = $userObj->userData();
     </div><!--INNER_ENDS-->
 </div><!--WRAPPER ENDS-->
 <!-- JavaScript Includes -->
+<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 </body>
 </html>

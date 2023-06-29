@@ -6,7 +6,7 @@
   },
 
   "require": {
-    "cboden/ratchet" : "^0.4.3",
+    "cboden/ratchet" : "^v0.4.4",
     "ext-pdo": "*",
     "ext-json": "*"
   }

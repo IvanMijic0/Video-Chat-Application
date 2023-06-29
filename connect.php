@@ -1,7 +1,11 @@
 <?php
 
+global $userObj;
 include "core/init.php";
 
+if (!$userObj->isLoggedIn()) {
+    $userObj->redirect("index.php");
+}
 $userObj->updateSession();
 
 if (isset($_GET["username"])) {
@@ -19,7 +23,7 @@ if (isset($_GET["username"])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <title>Live Video Chat PHP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -45,11 +49,30 @@ if (isset($_GET["username"])) {
     </script>
     <!-- Jquery timer -->
     <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/timer.jquery/0.7.0/timer.jquery.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/timer.jquery/0.7.0/timer.jquery.js">
+    </script>
 
 </head>
 <body>
 <!-- AlertPopup -->
+
+<div id="alertBox" class="hidden z-10 transition absolute w-full h-full flex items-center justify-center">
+    <div class="pop-up flex justify-between w-96 bg-white rounded overflow-hidden">
+        <div class="pl-6 border-green-600 px-2 py-2 flex items-center">
+            <div class="w-16 h-16 mx-1 rounded-full border overflow-hidden">
+                <img id="alertImage" class="w-full h-auto" src="" alt="">
+            </div>
+            <div class="flex flex-col">
+                <div id="alertName" class="mx-2 font-500">
+                </div>
+                <div class="animate-pulse mx-2 text-xs font-200 relative flex">
+                    <span id="alertMessage" class="flex"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- CallPopup -->
 
 <div id="callBox" class="hidden z-10 transition absolute w-full h-full flex items-center justify-center">
@@ -138,7 +161,7 @@ if (isset($_GET["username"])) {
             <div id="profile" class="flex flex-1 justify-center items-center">
                 <div class="flex flex-col flex-1 h-full overflow-hidden overflow-y-auto items-center justify-center">
                     <div class="w-60 h-60 right-img rounded-full overflow-hidden">
-                        <img class="h-auto w-full" src="<?php echo BASE_URL . $profileData->profileImage; ?>">
+                        <img class="h-auto w-full" src="<?php echo BASE_URL.$profileData->profileImage; ?>">
                     </div>
                     <div class="right-heading">
                         <h2 class="text-center"><?php echo $profileData->name; ?></h2>

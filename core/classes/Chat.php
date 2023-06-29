@@ -26,13 +26,13 @@ class Chat implements MessageComponentInterface
         $queryString = $conn->httpRequest->getUri()->getQuery();
         parse_str($queryString, $query);
 
-        if ($data = $this->userObj->getUserBySession($query["token"])) {
-            $this->data = $data;
-            $conn->data = $data;
+        if($data = $this->userObj->getUserBySession($query['token'])){
+            $this->data  = $data;
+            $conn->data  = $data;
             $this->clients->attach($conn);
             $this->userObj->updateConnection($conn->resourceId, $data->userId);
 
-            echo "New connection! ($data->username)\n";
+            echo "New connection! ({$data->username})\n";
         }
     }
 
