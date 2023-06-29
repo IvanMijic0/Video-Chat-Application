@@ -23,7 +23,15 @@ To run the video chat application, ensure you have the following prerequisites i
 ![Call_2](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_2.jpg)
 ![Call_1](https://github.com/IvanMijic0/Video-Chat-Application/blob/master/assets/GH/Call_1.jpg)
 
-Huge thanks to lecturer Aizaz dinho, as most of this code was inspired by his Udemy lecture "Create a Live Video Chat Application Using WebRTC, PHP, JS".
+## Configuration
+
+You may need to configure certain settings based on your specific environment and requirements. Here are some key configuration files:
+
+- "config.php": Contains server-side configurations, such as database credentials, signaling server URLs, etc.
+
+## Acknowledgments
+
+A special thanks to lecturer Aizaz Dinho for providing the foundation for this project in the Udemy lecture "Create a Live Video Chat Application Using WebRTC, PHP, JS". The lecture materials were instrumental in the development of this application.
 
 You can find his course here: https://www.udemy.com/course/create-a-live-video-chat-application-using-webrtc-php-js
 
